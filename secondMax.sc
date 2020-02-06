@@ -1,8 +1,23 @@
-def secondMax(list: List[Int]): Int = {
-  list match {
-    case Nil => 0
-    case first :: Nil => 0
-    case first :: rest => if (first > )
+def findSecondMax(givenList: List[Int], maximum: Int, secondMaximum: Int): Int = {
+  val secondMaxValue = givenList match {
+    case Nil => secondMaximum
+    case head :: Nil => secondMaximum
+    case first :: second :: rest =>
+      if (first > second) {
+        if (second > secondMaximum) findSecondMax(List(first) ::: rest, first, second)
+        else
+          findSecondMax(List(first) ::: rest, first, secondMaximum)
+      }
+      else if (first > secondMaximum)
+        findSecondMax(List(second) ::: rest, second, first)
+      else
+        findSecondMax(List(second) ::: rest, second, secondMaximum)
+
+    case _ => secondMaximum
   }
+  secondMaxValue
+
 }
-secondMax(List(1,2,6,4,5))
+
+val min = findSecondMax(List(2, 4, 1, 6), 0, 0)
+println(min)
